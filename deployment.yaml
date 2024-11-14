@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-deployment
+  labels:
+    app: apache-app
+spec:
+  replicas: 1  # Number of Pod replicas
+  selector:
+    matchLabels:
+      app: apache-app
+  template:
+    metadata:
+      labels:
+        app: apache-app
+    spec:
+      containers:
+      - name: apache-container
+        image: initd0853/my_apache8083  # Replace with your Docker image
+        ports:
+        - containerPort: 8086
+        # You may add resource requests and limits if needed
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache-service
+  labels:
+    app: apache-app
+spec:
+  selector:
+    app: apache-app
+  ports:
+  - protocol: TCP
+    port: 8086          # Service port within the cluster
+    targetPort: 8086    # Container port
+    nodePort: 30086     # Specific node port for external access (range: 30000-32767)
+  type: NodePort        # NodePort to expose the service on a specific port across all nodes
