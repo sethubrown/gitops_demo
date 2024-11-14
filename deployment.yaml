@@ -33,5 +33,5 @@ spec:
   - protocol: TCP
     port: 8087          # Service port within the cluster
     targetPort: 80    # Container port
-    nodePort: 30080   # Node port for external access (optional)
+    nodePort: 30081   # Node port for external access (optional)
   type: NodePort      # NodePort to make the service accessible on a port across all nodes
