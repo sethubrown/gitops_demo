@@ -7,4 +7,4 @@ COPY ./apache/* .
 
 RUN echo "ServerName localhost" >> /usr/local/apache2/conf/httpd.conf
 
-EXPOSE 8083
+EXPOSE 808i
