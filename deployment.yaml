@@ -1,37 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: apache-deployment
+  name: nginx-deployment
   labels:
-    app: apache-app
+    app: nginx-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: apache-app
+      app: nginx-app
   template:
     metadata:
       labels:
-        app: apache-app
+        app: nginx-app
     spec:
       containers:
-      - name: apache-container
-        image: initd0853/my_apache8083  # Replace with your actual Docker Hub image name
+      - name: nginx-container
+        image: nginx:latest  # Public image from Docker Hub
         ports:
-        - containerPort: 8086
+        - containerPort: 80  # Default port for nginx
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: apache-service
+  name: nginx-service
   labels:
-    app: apache-app
+    app: nginx-app
 spec:
   selector:
-    app: apache-app
+    app: nginx-app
   ports:
   - protocol: TCP
-    port: 8086
-    targetPort: 8086
-    nodePort: 30086  # Optional; for NodePort access
-  type: NodePort
+    port: 8087          # Service port within the cluster
+    targetPort: 80    # Container port
+    nodePort: 30080   # Node port for external access (optional)
+  type: NodePort      # NodePort to make the service accessible on a port across all nodes
